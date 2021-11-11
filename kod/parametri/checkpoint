@@ -1,0 +1,2 @@
+model_checkpoint_path: "parametri"
+all_model_checkpoint_paths: "parametri"

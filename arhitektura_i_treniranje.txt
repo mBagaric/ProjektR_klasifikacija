@@ -1,0 +1,11 @@
+razlicite arhitekture
+  - broj slojeva
+  - broj neuruna
+  - aktivacijska funkcija
+  - konvolucijski slojevi - filteri, strides
+
+razlicite algoritmi treniranja
+  - hyperparametri
+  - regularizacija - free lunch, l2, l1...
+  - cost function
+  - optimizers - gradient decent, sgd, adam...
