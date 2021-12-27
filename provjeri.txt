@@ -1,0 +1,6 @@
+confusion matrix
+grid searchaj parametre
+data augmentation
+sklearn.multiclass
+OvO ili OvA
+StandardScaler
