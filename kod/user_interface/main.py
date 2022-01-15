@@ -11,16 +11,18 @@ from kivy.graphics import Line
 from kivy.uix.label import Label
 from PIL import Image
     
-Config.set('graphics', 'resizable', True) 
+Config.set('graphics', 'resizable', True)
+Config.set('graphics', 'width', 500) 
+Config.set('graphics', 'height', 350)
 
-model = tf.keras.models.load_model('final_simple_v1.0')
+model = tf.saved_model.load('final_simple_v1.0')
 
 class DrawInput(Widget):
     
     def on_touch_down(self, touch):
         with self.canvas:
            if not self.collide_point(*touch.pos): return
-           touch.ud["line"] = Line(points=(touch.x, touch.y), width=10)
+           touch.ud["line"] = Line(points=(touch.x, touch.y), width=15)
         
     def on_touch_move(self, touch):
         if not self.collide_point(*touch.pos): return
@@ -59,10 +61,14 @@ class MyApp(App):
         self.painter.export_to_png("draw.png")
         img = Image.open('draw.png')
         resized_img = img.resize((28, 28))
-        predictions = model.predict(resized_img)
-        sorted = np.sort(predictions)
-        self.label.text = str(sorted[0]) + '\n' + str(sorted[1]) + str(sorted[2]) + '\n' + str(sorted[3]) + str(sorted[4])
-        os.remove('draw.png')
+        sample = np.array(resized_img)
+        sample = sample.astype('float32')
+        sample /= 255.0
+        predictions = model.predict(sample)
+        sortedPredictions = np.sort(predictions)
+        print(sortedPredictions)
+        #self.label.text = str(sorted[0]) + '\n' + str(sorted[1]) + str(sorted[2]) + '\n' + str(sorted[3]) + str(sorted[4])
+        #os.remove('draw.png')
   
 # run the App
 if __name__ == "__main__":
